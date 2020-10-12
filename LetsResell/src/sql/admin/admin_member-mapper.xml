@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectListCount">
+		 SELECT 
+		        COUNT(*) LISTCOUNT
+		   FROM MEMBER
+	</entry>
+	<entry key="selectList">
+	    SELECT *
+		  FROM (
+		        SELECT 
+		                ROWNUM RNUM
+		              , A.*
+		        FROM (
+		             SELECT *
+					 FROM MEMBER
+					 ORDER BY MEM_USER_NO DESC
+		            ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="searchListCount_code">
+		SELECT COUNT(*) LISTCOUNT
+		FROM MEMBER
+		WHERE MEM_USER_NO LIKE ?
+	</entry>
+	<entry key="searchListCount_name">
+		SELECT COUNT(*) LISTCOUNT
+		FROM MEMBER
+		WHERE MEM_USER_NAME LIKE ?
+	</entry>
+	<entry key="searchListCount_phone">
+		SELECT COUNT(*) LISTCOUNT
+		FROM MEMBER
+		WHERE MEM_PHONE LIKE ?
+	</entry>
+	<entry key="searchListCount_email">
+		SELECT COUNT(*) LISTCOUNT
+		FROM MEMBER
+		WHERE MEM_USER_ID LIKE ?
+	</entry>
+	<entry key="searchList_code">
+		SELECT *
+		  FROM (
+		        SELECT 
+		                ROWNUM RNUM
+		              , A.*
+		        FROM (
+		             SELECT *
+					 FROM MEMBER
+					 WHERE MEM_USER_NO LIKE ?
+					 ORDER BY MEM_USER_NO DESC
+		            ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="searchList_name">
+		SELECT *
+		  FROM (
+		        SELECT 
+		                ROWNUM RNUM
+		              , A.*
+		        FROM (
+		             SELECT *
+					 FROM MEMBER
+					 WHERE MEM_USER_NAME LIKE ?
+					 ORDER BY MEM_USER_NO DESC
+		            ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="searchList_phone">
+		SELECT *
+		  FROM (
+		        SELECT 
+		                ROWNUM RNUM
+		              , A.*
+		        FROM (
+		             SELECT *
+					 FROM MEMBER
+					 WHERE MEM_PHONE LIKE ?
+					 ORDER BY MEM_USER_NO DESC
+		            ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="searchList_email">
+		SELECT *
+		  FROM (
+		        SELECT 
+		                ROWNUM RNUM
+		              , A.*
+		        FROM (
+		             SELECT *
+					 FROM MEMBER
+					 WHERE MEM_USER_ID LIKE ?
+					 ORDER BY MEM_USER_NO DESC
+		            ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectDetailMember">
+		SELECT *
+		  FROM MEMBER
+		 WHERE MEM_USER_NO = ?
+	</entry>
+	<entry key="activeMember">
+		UPDATE MEMBER
+		   SET MEM_BLACKLIST_STATUS = 'N'
+		 WHERE MEM_USER_NO = ?
+	</entry>
+	<entry key="blackMember">
+		UPDATE MEMBER
+		   SET MEM_BLACKLIST_STATUS = 'Y'
+		 WHERE MEM_USER_NO = ?
+	</entry>
+	<entry key="blackYesNo">
+		SELECT MEM_BLACKLIST_STATUS
+		  FROM MEMBER
+		 WHERE MEM_USER_NO = ?
+	</entry>
+</properties>

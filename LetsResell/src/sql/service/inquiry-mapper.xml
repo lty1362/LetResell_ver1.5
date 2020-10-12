@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectListCount">
+		 SELECT 
+		        COUNT(*) LISTCOUNT
+		   FROM INQUIRY
+		  WHERE INQUIRY_WRITER = ?
+	</entry>
+	<entry key="selectList">
+		SELECT *
+		  FROM (
+		        SELECT 
+		                ROWNUM RNUM
+		              , A.*
+		        FROM (
+		            SELECT 
+					       INQUIRY_NO
+					     , INQUIRY_WRITER
+					     , INQUIRY_CATEGORY_BIG
+					     , INQUIRY_CATEGORY_SMALL
+					     , INQUIRY_TITLE
+					     , INQUIRY_CONTENT
+					     , INQUIRY_ENROLL_DATE
+					     , INQUIRY_STATUS
+					     , INQUIRY_ANSWER
+					     , INQUIRY_ANSWER_DATE
+					 FROM INQUIRY
+					WHERE INQUIRY_WRITER = ?
+					ORDER BY INQUIRY_ENROLL_DATE DESC
+		            ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectDetail">
+		SELECT *
+		  FROM (
+		        SELECT 
+		                ROWNUM RNUM
+		              , A.*
+		        FROM (
+		            SELECT 
+					       INQUIRY_NO
+					     , INQUIRY_WRITER
+					     , INQUIRY_CATEGORY_BIG
+					     , INQUIRY_CATEGORY_SMALL
+					     , INQUIRY_TITLE
+					     , INQUIRY_CONTENT
+					     , INQUIRY_ENROLL_DATE
+					     , INQUIRY_STATUS
+					     , INQUIRY_ANSWER
+					     , INQUIRY_ANSWER_DATE
+					 FROM INQUIRY
+					WHERE INQUIRY_WRITER = ?
+					  AND INQUIRY_NO = ?
+					ORDER BY INQUIRY_ENROLL_DATE DESC
+		            ) A
+		        )
+	</entry>
+	<entry key="updateInquiry">
+		UPDATE INQUIRY
+		   SET 
+		       INQUIRY_TITLE = ?
+		     , INQUIRY_CATEGORY_BIG = ?
+		     , INQUIRY_CATEGORY_SMALL = ?
+		     , INQUIRY_CONTENT = ?
+		 WHERE INQUIRY_NO = ?
+	</entry>
+	<entry key="insertInquiry">
+		INSERT
+		  INTO INQUIRY
+		VALUES
+		     (
+		        SEQ_INQUIRY.NEXTVAL
+		      , ?
+		      , ?
+		      , ?
+		      , ?
+		      , ?
+		      , SYSDATE
+		      , DEFAULT
+		      , NULL
+		      , NULL
+		     )
+	</entry>
+	<entry key="selectInquiryAllCount">
+		 SELECT 
+		        COUNT(*) LISTCOUNT
+		   FROM INQUIRY
+	</entry>
+	<entry key="selectInquiryAll">
+		SELECT *
+		  FROM (
+		        SELECT 
+		                ROWNUM RNUM
+		              , A.*
+		        FROM (
+		            SELECT 
+					       INQUIRY_NO
+					     , M.MEM_USER_ID
+					     , INQUIRY_CATEGORY_BIG
+					     , INQUIRY_CATEGORY_SMALL
+					     , INQUIRY_TITLE
+					     , INQUIRY_CONTENT
+					     , INQUIRY_ENROLL_DATE
+					     , INQUIRY_STATUS
+					     , INQUIRY_ANSWER
+					     , INQUIRY_ANSWER_DATE
+					 FROM INQUIRY I
+					 JOIN MEMBER M ON (I.INQUIRY_WRITER = M.MEM_USER_NO)
+					ORDER BY INQUIRY_NO DESC
+		            ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectDetailUpdate">
+		SELECT *
+		  FROM (
+		        SELECT 
+		                ROWNUM RNUM
+		              , A.*
+		        FROM (
+		            SELECT 
+					       INQUIRY_NO
+					     , INQUIRY_WRITER
+					     , INQUIRY_CATEGORY_BIG
+					     , INQUIRY_CATEGORY_SMALL
+					     , INQUIRY_TITLE
+					     , INQUIRY_CONTENT
+					     , INQUIRY_ENROLL_DATE
+					     , INQUIRY_STATUS
+					     , INQUIRY_ANSWER
+					     , INQUIRY_ANSWER_DATE
+					 FROM INQUIRY
+					WHERE INQUIRY_NO = ?
+					ORDER BY INQUIRY_ENROLL_DATE DESC
+		            ) A
+		        )
+	</entry>
+	<entry key="updateInquiryAnswer">
+		UPDATE INQUIRY
+		   SET 
+		       INQUIRY_ANSWER = ?
+		     , INQUIRY_ANSWER_DATE = SYSDATE
+		     , INQUIRY_STATUS = 'Y'
+		 WHERE INQUIRY_NO = ?
+	</entry>
+</properties>

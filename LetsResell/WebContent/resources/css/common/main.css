@@ -1,0 +1,16 @@
+@charset "UTF-8";
+.main{
+    width: 1200px;
+    height: 1950px;
+    margin: auto;
+}
+.main>div{ float: left;}
+#main_filter{
+    width: 10%;
+    height: 370px;
+}
+#main_page{
+    width: 90%;
+    height: 100%;
+    position: relative;
+}

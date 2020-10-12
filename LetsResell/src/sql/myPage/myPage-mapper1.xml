@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="selectMember">
+		SELECT
+		       MEM_USER_NO
+		      ,MEM_USER_ID
+		      ,MEM_USER_PWD
+		      ,MEM_USER_NAME
+		      ,MEM_PHONE
+		      ,MEM_ENROLL_DATE
+		      ,MEM_MODIFY_DATE
+		      ,MEM_STATUS
+		      ,MEM_USER_SSN
+		      ,MEM_OUT_DATE
+		      ,MEM_REPORT_COUNT
+		      ,MEM_BLACKLIST_STATUS
+		  FROM MEMBER
+		 WHERE MEM_USER_NO = ?
+	</entry>
+		
+	<entry key="selectCard">
+		SELECT CARD_NAME
+		     , CARD_NUMBER
+		  FROM CARD
+		  WHERE MEM_USER_NO = ?
+	</entry>
+	
+	<entry key="selectAddress">
+		SELECT ADDRESS_CODE
+		     , ADDRESS_MAIN
+		     , ADDRESS_DETAIL
+		     , ADDRESS_PHONE
+		     , ADDRESS_NAME
+		     , ADDRESS_MESSAGE
+		  FROM ADDRESS
+		  WHERE MEM_USER_NO = ?
+	</entry>
+	
+	<entry key="updateMember">
+		UPDATE
+		       MEMBER
+		   SET MEM_USER_NAME = ?
+		     , MEM_USER_SSN = ?
+		     , MEM_MODIFY_DATE = SYSDATE
+		 WHERE MEM_USER_NO = ?
+	</entry>
+	
+	<entry key="updatePwd">
+		UPDATE
+		       MEMBER
+		   SET MEM_USER_PWD = ?
+		     , MEM_MODIFY_DATE = SYSDATE
+		 WHERE MEM_USER_NO = ?
+		   AND MEM_USER_PWD = ?
+	</entry>
+	
+	<entry key="updateMemStatus">
+		UPDATE
+	       MEMBER
+	   SET MEM_STATUS = 'N'
+	     , MEM_MODIFY_DATE = SYSDATE
+	 WHERE MEM_USER_NO = ?
+	   AND MEM_USER_PWD = ?
+	</entry>
+	
+	<entry key="insertCard">
+		INSERT
+		  INTO CARD
+		  (
+		     CARD_NO
+		   , MEM_USER_NO
+		   , CARD_NAME
+		   , CARD_NUMBER
+		   , CARD_VALIDATE
+		   , CARD_MEM_BIRTH
+		   , CARD_PWD
+		   , CARDINFO_NO
+		  )
+		  VALUES
+		  (
+		     SEQ_CNO.NEXTVAL
+		   , ?
+		   , ?
+		   , ?
+		   , ?
+		   , ?
+		   , ?
+		   , 1
+		  )
+	</entry>
+	
+	<entry key="insertAddress">
+		INSERT
+		  INTO ADDRESS
+		  (
+		     ADDRESS_NO
+		   , MEM_USER_NO
+		   , ADDRESS_CODE
+		   , ADDRESS_MAIN
+		   , ADDRESS_DETAIL
+		   , ADDRESS_PHONE
+		   , ADDRESS_NAME
+		   , ADDRESS_BASIC
+		   , ADDRESS_MESSAGE
+		  )
+		  VALUES
+		  (
+		     SEQ_ADDRESSNO.NEXTVAL
+		   , ?
+		   , ?
+		   , ?
+		   , ?
+		   , ?
+		   , ?
+		   , ?
+		   , ?
+		  )
+	</entry>
+	
+	<entry key="updateAccount">
+		UPDATE
+		       MEMBER
+		   SET MEM_BANKNAME = ?
+		     , MEM_ACCOUNT_NUM = ?
+		     , MEM_ACCOUNTHOLDER = ?
+		     , MEM_MODIFY_DATE = SYSDATE
+		 WHERE MEM_USER_ID = ?
+	</entry>
+	
+	<entry key="deleteCard">
+		DELETE
+		  FROM CARD
+		 WHERE MEM_USER_NO = ?
+		   AND CARD_NAME = ?
+	</entry>
+	
+	<entry key="updateModifyDate">
+		UPDATE
+		       MEMBER
+		   SET MEM_MODIFY_DATE = SYSDATE
+		 WHERE MEM_USER_NO = ?
+	</entry>
+	
+	<!-- 위시리스트 sql문 -->
+	<entry key="selectWishlistCount">
+		SELECT
+		       COUNT(*) WISHLISTCOUNT
+		  FROM WISHLIST
+		 WHERE WISHLIST_MCODE = ?
+	</entry>
+	
+	<entry key="selectWishlist">
+		SELECT * 
+		  FROM (
+		        SELECT 
+		               ROWNUM RNUM
+		             , A.*
+		          FROM (
+		                SELECT
+		                       WISHLIST_ADD_DATE
+		                     , PR_NAME
+		                  FROM WISHLIST WISH
+		                  JOIN P_REG ON (WISHLIST_PCODE=PR_NO)
+		                 WHERE WISHLIST_MCODE = ?
+		                 ORDER
+		                    BY WISHLIST_ADD_DATE DESC
+		              ) A
+		       )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectWishlist2">
+		SELECT * 
+		  FROM (
+		        SELECT 
+		               ROWNUM RNUM
+		             , A.*
+		          FROM (
+		                SELECT
+		                       WISHLIST_ADD_DATE
+		                     , PR_NAME
+		                  FROM WISHLIST WISH
+		                  JOIN P_REG ON (WISHLIST_PCODE=PR_NO)
+		                 WHERE WISHLIST_MCODE = ?
+		                 ORDER
+		                    BY WISHLIST_ADD_DATE ASC
+		              ) A
+		       )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="deleteWishlist">
+		DELETE
+		  FROM (
+		         SELECT
+		                PR_NAME
+		           FROM WISHLIST
+		           JOIN P_REG ON (WISHLIST_PCODE=PR_NO)
+		          WHERE WISHLIST_MCODE = ?
+		       )
+		 WHERE PR_NAME = ?
+	</entry>
+</properties>

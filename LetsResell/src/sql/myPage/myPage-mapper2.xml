@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectPurchaseList">
+		SELECT
+		       BID_NO
+		     , BID_PRICE
+		     , BID_STATUS
+		     , SALE_NO
+		     , SALE_NAME
+		     , SALE_CONDITION
+		     , SALE_SIZE
+		     , SALE_CATEGORY
+		     , PR_IMG_URL || PR_ORIGIN_NAME "TITLEIMG"
+		  FROM BID B
+		  JOIN SALE USING(SALE_NO)
+		  JOIN P_IMG USING(PR_NO)
+		 WHERE B.MEM_USER_NO = ?
+		   AND BID_STATUS = '경매중'
+		   ORDER 
+    		  BY BID_NO DESC
+	</entry>
+	<entry key="purchaseCount">
+		SELECT COUNT(*) LISTCOUNT
+		  FROM BID
+		  JOIN MEMBER USING(MEM_USER_NO)
+		 WHERE MEM_USER_NO = ?
+		   AND BID_STATUS = '경매중'
+	</entry>
+	<entry key="enrollPrice">
+		UPDATE 
+		       BID
+		   SET BID_PRICE = ?
+		 WHERE BID_NO = ?
+	</entry>  
+	<entry key="highestPrice">
+		SELECT 
+		   MAX(BID_PRICE)
+		  FROM BID
+		 WHERE SALE_NO = ?
+	</entry>
+	<entry key="deleteDetail">
+		UPDATE 
+		       BID
+		   SET BID_STATUS = '입찰취소'
+		 WHERE BID_NO = ?
+	</entry>
+	<entry key="selectPurchaseStatus">
+		SELECT 
+		       TRADE_NO
+		     , TRADE_STATUS
+		     , TRADE_SERVICE
+		     , TRADE_NUMBER
+		     , TRADE_CONCLUDE
+		     , TRADE_PRICE
+		     , SALE_NO
+		     , SALE_NAME
+		     , SALE_CONDITION
+		     , SALE_SIZE
+		     , SALE_CATEGORY
+		     , PR_IMG_URL || PR_ORIGIN_NAME "TITLEIMG"
+		  FROM TRADE T
+		  LEFT JOIN SALE USING(SALE_NO)
+		  JOIN P_IMG USING(PR_NO)
+		 WHERE T.MEM_USER_NO = ?
+		   AND TRADE_STATUS = '배송전'
+            OR TRADE_STATUS = '배송중'
+	</entry>
+	<entry key="selectStatusInfo">
+		SELECT 
+		       TRADE_NO
+		     , TRADE_STATUS
+		     , TRADE_SERVICE
+		     , TRADE_NUMBER
+		     , TRADE_CONCLUDE
+		     , TRADE_PRICE
+		     , SALE_NO
+		     , SALE_NAME
+		     , SALE_CONDITION
+		     , SALE_SIZE
+		     , SALE_CATEGORY
+		     , PR_IMG_URL || PR_ORIGIN_NAME "TITLEIMG"
+		  FROM TRADE T
+		  LEFT JOIN SALE USING(SALE_NO)
+		  JOIN P_IMG USING(PR_NO)
+		 WHERE TRADE_NO = ?
+	</entry>
+	<entry key="saleInfo">
+		SELECT 
+		       MEM_PHONE
+		  FROM SALE
+		  JOIN MEMBER USING(MEM_USER_NO)
+		 WHERE SALE_NO=?
+	</entry>
+	<entry key="selectAddress">
+		SELECT ADDRESS_CODE
+		     , ADDRESS_MAIN
+		     , ADDRESS_DETAIL
+		     , ADDRESS_PHONE
+		     , ADDRESS_NAME
+		     , ADDRESS_MESSAGE
+		  FROM ADDRESS
+		  WHERE MEM_USER_NO = ?
+	</entry>
+	<entry key="updateStatus">
+		UPDATE
+		       TRADE
+		   SET TRADE_STATUS = '배송완료'
+		 WHERE TRADE_NO = ?
+	</entry>
+	<entry key="updateSalesStatus">
+		UPDATE 
+		       SALE
+		   SET SALE_STATUS = '거래완료'
+		 WHERE SALE_NO = ?
+	</entry>
+	<entry key="deletePurchase">
+		UPDATE 
+		       TRADE
+		   SET TRADE_STATUS = '구매취소'
+		 WHERE TRADE_NO = ?
+	</entry>
+	<entry key="deleteSales">
+		UPDATE 
+		       SALE
+		   SET SALE_STATUS = '거래취소'
+		 WHERE SALE_NO = ?
+	</entry>
+	<entry key="selectPurchaseCom">
+		 SELECT 
+		       TRADE_NO
+		     , TRADE_STATUS
+		     , TRADE_SERVICE
+		     , TRADE_NUMBER
+		     , TRADE_CONCLUDE
+		     , TRADE_PRICE
+		     , SALE_NAME
+		     , SALE_CONDITION
+		     , SALE_SIZE
+		     , SALE_CATEGORY
+		     , PR_IMG_URL || PR_ORIGIN_NAME "TITLEIMG"
+		  FROM TRADE T
+		  LEFT JOIN SALE USING(SALE_NO)
+		  JOIN P_IMG USING(PR_NO)
+		 WHERE T.MEM_USER_NO = ?
+		   AND TRADE_STATUS = '배송완료'
+	</entry>
+</properties>
