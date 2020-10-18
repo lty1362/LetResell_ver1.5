@@ -18,29 +18,29 @@ pageEncoding="UTF-8"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <%-- 다음 카카오 주소검색 api --%>
-
-<!-- CSS -->
-<%@ include file="../../resources/css/myPage/myPage_memInfoView.css"%>
-<!-- js -->
-<!-- 프로필 -->
-<script type="text/javascript" src="resources/js/myPage/myPage_member.js" ></script> 
-<!-- 카드 -->
-<script type="text/javascript" src="resources/js/myPage/myPage_card.js" ></script> 
-<!-- 배송지 -->
-<script type="text/javascript" src="resources/js/myPage/myPage_address.js" ></script> 
-<!-- 계좌 -->	 	
-<script type="text/javascript" src="resources/js/myPage/myPage_account.js" ></script> 
-		 
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <%-- 다음 카카오 주소검색 api --%>	 
+    <!-- CSS -->
+	<%@ include file="../../resources/css/myPage/myPage_memInfoView.css"%>
 </head>
 
 <body>
     <%@ include file="../common/header.jsp" %>
+	<!-- js -->
+	<!-- 프로필 -->
+	<script type="text/javascript" src="resources/js/myPage/myPage_member.js" ></script> 
+	<!-- 카드 -->
+	<script type="text/javascript" src="resources/js/myPage/myPage_card.js" ></script> 
+	<!-- 배송지 -->
+	<script type="text/javascript" src="resources/js/myPage/myPage_address.js" ></script> 
+	<!-- 계좌 -->	 	
+	<script type="text/javascript" src="resources/js/myPage/myPage_account.js" ></script> 
 	<div class="outer">
         <div class="mypage">
             <%@ include file="../myPage/sideMenubar.jsp" %>
             <div class="mypage_body">
                 <p class="meminfo_title">회원정보</p>
+                <input type="text" style="margin-left: 20px; margin-bottom:50px" id="name1">
+                <label id="result1"></label>
      			<%
 					int userNo = loginUser.getUserNo();
 					String userId = loginUser.getUserId();
@@ -162,6 +162,10 @@ pageEncoding="UTF-8"%>
 									<input type="hidden" id="userNo" name="userNo" value="<%= userNo %>">
 									<div style="margin-top: 10px;">이름
 										<input type="text" id="name" name="name" class="form-control" placeholder="이름" style="margin-top: 5px; width: 120px;">
+										<label id="result"></label>
+										<script>
+
+									    </script>
 									</div>
 									<div style="margin-top: 25px;">생년월일 <br>
 										<input type="text" id="userSsn1" name="userSsn1" class="form-control" placeholder="년(4자)" style="margin-top: 5px; width: 100px; float: left;">
@@ -175,7 +179,7 @@ pageEncoding="UTF-8"%>
 										<input type="text" class="form-control" placeholder="인증번호를 입력하세요." style="margin-top: 5px; width: 170px;">
 									</div> -->
 									<div style="float: right; margin-top: 30px;">
-										<button type="submit" id="btn_updateMember" class="btn text-info" data-dismiss="modal" style="font-weight: bold;">저장</button>
+										<button type="submit" id="btn_updateMember" class="btn text-info" data-dismiss="modal" style="font-weight: bold;" disabled>저장</button>
 										<button type="button" class="btn text-secondary" data-dismiss="modal" style="font-weight: bold;">취소</button>
 									</div>                   
 								</div>

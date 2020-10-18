@@ -24,5 +24,28 @@ $(document).ready(function(){
 	$("#btn_updateMemStatus").on("click", function(){
 		$("#updateMemStatusForm").submit();
 	});
+
+});
+
+$(function(){
 	
+	var regName = /^[가-힣]{2,20}$/;
+	
+    $("#name").keyup(function(){
+
+    	if($(this).val().length > 0){
+
+	        if(regName.test($(this).val())){ // 특정패턴에 만족할경우
+	            $("#result").css({"color":"black", "font-size":"12px", "font-weight":"lighter"}).html("사용가능한 형식입니다.");
+	            $("#btn_updateMember").attr("disabled", true);
+	        }else{ // 그게 아닐 경우
+	            $("#result").css({"color":"red", "font-size":"12px", "font-weight":"lighter"}).html("사용할 수 없는 형식입니다.");
+	            $("#btn_updateMember").attr("disabled", true);
+	        }
+
+    	}else{
+    		$("#result").html("");
+    	}
+
+    });
 });
